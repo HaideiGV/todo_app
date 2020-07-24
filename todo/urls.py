@@ -18,12 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from todo.api.views import UserViewSet, BoardViewSet, TodoItemViewSet
+from todo.api.views import UserViewSet, BoardViewSet, TodoItemViewSet, ReminderViewSet
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'boards', BoardViewSet)
 router.register(r'todos', TodoItemViewSet)
+router.register(r'reminders', ReminderViewSet)
 
 
 urlpatterns = [

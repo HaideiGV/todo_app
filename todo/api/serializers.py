@@ -18,6 +18,13 @@ class TodosSerializer(serializers.HyperlinkedModelSerializer):
         exclude = ('created_at', 'updated_at', )
 
 
+class ReminderSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = TodoItem
+        exclude = ('created_at', 'updated_at', )
+
+
 class BoardSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:

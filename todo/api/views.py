@@ -1,14 +1,19 @@
 from django.contrib.auth.models import User
 from django.db.models import Count
 from rest_framework import viewsets
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, DestroyModelMixin
+from rest_framework.viewsets import GenericViewSet
 
-from todo.api.models import Board, TodoItem
+from todo.api.tasks import send_reminder
+
+from todo.api.models import Board, TodoItem, Reminder
 from todo.api.serializers import (
     UserSerializer,
     BoardListSerializer,
     TodosSerializer,
     BoardDetailSerializer,
     BoardSerializer,
+    ReminderSerializer,
 )
 
 
@@ -36,3 +41,16 @@ class TodoItemViewSet(viewsets.ModelViewSet):
     serializer_class = TodosSerializer
 
 
+
+class ReminderViewSet(
+    CreateModelMixin, DestroyModelMixin, ListModelMixin, GenericViewSet
+):
+    queryset = Reminder.objects.all()
+    serializer_class = ReminderSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(request.data)
+        serializer.is_valid(True)
+        serializer.save()
+        print(">>>> INST  ", serializer.instance.id)
+        send_reminder.apply_async(args=[serializer.instance.id], countdown=serializer.instance.delay)
