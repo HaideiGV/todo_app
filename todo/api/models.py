@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
@@ -20,4 +21,5 @@ class Reminder(models.Model):
     email = models.EmailField(blank=False, null=False)
     text = models.CharField(max_length=512, null=False, blank=False)
     delay = models.PositiveIntegerField(null=False, blank=False)
+    user = models.ForeignKey(User, on_delete=CASCADE, related_name="reminders")
 

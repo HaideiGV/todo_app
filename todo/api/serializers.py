@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from todo.api.models import Board, TodoItem
+from todo.api.models import Board, TodoItem, Reminder
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -21,8 +21,8 @@ class TodosSerializer(serializers.HyperlinkedModelSerializer):
 class ReminderSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
-        model = TodoItem
-        exclude = ('created_at', 'updated_at', )
+        model = Reminder
+        fields = '__all__'
 
 
 class BoardSerializer(serializers.HyperlinkedModelSerializer):
