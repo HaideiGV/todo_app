@@ -6,6 +6,7 @@ from django.db.models import CASCADE
 
 
 class Board(models.Model):
+    user = models.ForeignKey(User, related_name='boards', on_delete=CASCADE)
     name = models.CharField(max_length=256, null=False, blank=False)
 
 

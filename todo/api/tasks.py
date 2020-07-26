@@ -15,7 +15,7 @@ def send_reminder(reminder_id, **kwargs):
     try:
         reminder = Reminder.objects.get(pk=reminder_id)
     except Reminder.DoesNotExist:
-        log.error(f"Reminder[{reminder_id}] not found.")
+        log.error(f"Reminder[{reminder_id}] not found or already deleted.")
         return
 
     with mail.get_connection() as connection:

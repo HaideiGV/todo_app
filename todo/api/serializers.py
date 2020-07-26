@@ -20,12 +20,20 @@ class TodosSerializer(serializers.HyperlinkedModelSerializer):
 
 class ReminderSerializer(serializers.HyperlinkedModelSerializer):
 
+    def create(self, validated_data):
+        user = self.context['request'].user
+        return Reminder.objects.create(user=user, **validated_data)
+
     class Meta:
         model = Reminder
-        fields = '__all__'
+        fields = ("text", "email", "delay", "url")
 
 
 class BoardSerializer(serializers.HyperlinkedModelSerializer):
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        return Board.objects.create(user=user, **validated_data)
 
     class Meta:
         model = Board
