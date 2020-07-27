@@ -60,3 +60,26 @@ Please use celery to implement the delayed execution.
 
 Please note that we don't accept solutions without periodic commits or if we are unable to execute the solution.
 
+
+## Steps to setup and run project
+
+* Create virtualenv and activate it
+* Install dependencies through running command `pip install -r requirements.txt`
+* `python manage.py migrate`
+* Execute `python manage.py runserver` for run local server.
+* Execute in new terminal `celery -A todo worker -l info` for running celery worker.
+* If you don't have account, go to the `http://localhost:8000/api/signup/` for registration.
+* Open `http://localhost:8000` and login.
+* On set reminder, result of sending email you can see in `celery terminal` as a message
+    ```
+    [2020-07-26 03:08:30,283: WARNING/ForkPoolWorker-8] Content-Type: text/plain; charset="utf-8"
+    MIME-Version: 1.0
+    Content-Transfer-Encoding: 7bit
+    Subject: [Reminder]
+    From: noreply@example.com
+    To: email_name@mail.com
+    Date: Sun, 26 Jul 2020 03:08:30 -0000
+    Message-ID:
+     <159573291028.76286.18326095941708986929@user-.local>
+    <Reminder text>
+    ```
